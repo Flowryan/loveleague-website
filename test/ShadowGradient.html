@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Love League</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 11vw;
+        color: yellow;
+        margin: 0;
+      }
+      main {
+        height: 100vh;
+        background-image: url('https://loveleague.de/images/background.png');
+        background-position: center center;
+        background-size: cover;
+      }
+      div.gradient {
+        background: -webkit-linear-gradient(
+          rgba(251, 255, 0, 0.945),
+          #ff5c00ff
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      div.shadow {
+        text-shadow: 0.03em 0.06em black;
+      }
+      div.shadow.gradient {
+        text-shadow: none;
+        filter: drop-shadow(0.04em 0.08em black);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="shadow">Shadow</div>
+      <div class="gradient">Gradient</div>
+      <div class="shadow gradient">Shadow Gradient</div>
+      <div>Just Text</div>
+      <div style="font-size: 2vw">
+        <div class="shadow">Shadow</div>
+        <div class="gradient">Gradient</div>
+        <div class="shadow gradient">Shadow Gradient</div>
+        <div>Just Text</div>
+      </div>
+      <div style="font-size: 1vw">
+        <div class="shadow">Shadow</div>
+        <div class="gradient">Gradient</div>
+        <div class="shadow gradient">Shadow Gradient</div>
+        <div>Just Text</div>
+      </div>
+      <div style="font-size: 3vw">
+        <div class="shadow">Shadow</div>
+        <div class="gradient">Gradient</div>
+        <div class="shadow gradient">Shadow Gradient</div>
+        <div>Just Text</div>
+      </div>
+    </main>
+  </body>
+</html>

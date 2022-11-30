@@ -1,0 +1,185 @@
+body {
+  margin: 0;
+  background-color: #1c87c9;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;
+  color: rgb(247, 189, 0);
+}
+
+main {
+  /* Breite auf Hintergrundbild beschränken.
+   * Das Bild ist 2560 x 1440 bzw. 16:9, ich möchte nur die Hälfte der Höhe anzeigen, um den Rest zum scrollen zu haben.
+   * Der maximal sichtbare Bereich ist also 16:4.5 bzw. 32:9. (355vh)
+   * Wird der Viewport noch breiter, wird aussen ein blauer Rand angezeigt. */
+  background-image: url('https://loveleague.de/images/background.png');
+  background-position: center center;
+  background-size: cover;
+  max-width: 355vh;
+  margin: auto; /*sichtbaren Bereich bei Anzeige des blauen Randes zentrieren */
+
+  /* Konfiguration für Scrolling */
+  max-height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 20px;
+}
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #d6dee160;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+/* text modifications */
+div.stroke,
+div.stroke a {
+  -webkit-text-stroke: 0.02em black;
+}
+div.gradient {
+  background: -webkit-linear-gradient(rgb(255, 255, 0) 40%, rgb(255, 50, 0));
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+a:hover div.gradient {
+  background: -webkit-linear-gradient(rgb(255, 255, 0) 15%, rgb(255, 50, 0));
+  -webkit-background-clip: text;
+}
+div.shadow {
+  text-shadow: 0.05em 0.15em grey;
+}
+div.shadow.gradient {
+  text-shadow: none;
+  filter: drop-shadow(0.05em 0.15em rgb(100, 100, 100));
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+nav {
+  position: fixed;
+  z-index: 10;
+
+  /* nicht breiter, als 3:2 damit die Wolken aussen noch in der Nähe sind */
+  width: 90%;
+  max-width: 150vh;
+
+  /* zentriert */
+  right: 0;
+  left: 0;
+  margin: auto;
+}
+a.cloud {
+  position: absolute;
+  margin-top: 1vh;
+
+  background-size: 100% 100%;
+
+  width: 25%;
+  max-width: 25vh;
+  height: 10vmin;
+}
+a.cloud div.cloud-text {
+  position: relative;
+
+  width: 100%;
+  text-align: center;
+
+  font-size: 3.2vmin;
+}
+#galery-cloud {
+  background-image: url('https://loveleague.de/images/Cloud_1.png');
+}
+#galery-cloud div.cloud-text {
+  top: 3.8vmin;
+}
+#loveleague-cloud {
+  background-image: url('https://loveleague.de/images/Cloud_2.png');
+  left: 40%;
+  scale: 2;
+  top: 5vmin;
+}
+#loveleague-cloud div.cloud-text {
+  top: 4.7vmin;
+}
+#download-cloud {
+  background-image: url('https://loveleague.de/images/Cloud_3.png');
+  right: 0%;
+}
+#download-cloud div.cloud-text {
+  top: 3.5vmin;
+}
+
+section {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+}
+
+.content {
+  pointer-events: none; /*Scrollen durchreichen*/
+
+  position: relative;
+  top: 26vmin;
+
+  width: 95%;
+  max-width: 150vh; /*Aber nur bis 3:2, damit es mit den Wolken passt*/
+
+  height: calc(95vh - 26vmin);
+
+  /* zentriert */
+  margin: auto;
+
+  background-color: #1c87c980;
+}
+.content .text {
+  position: relative;
+  left: 2vmin;
+  top: 2vmin;
+  pointer-events: all;
+  font-size: 2vmin;
+}
+.content .text .title {
+  font-size: 250%;
+  margin-bottom: 2vh;
+}
+.content .text .big {
+  font-size: 175%;
+  margin-top: 2vh;
+}
+.content .video {
+  pointer-events: all;
+
+  margin: 4vmin 2vmin;
+
+  height: calc(100% - 19vmin);
+  max-height: 70vw;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+
+  width: 100%;
+  max-width: 355vh;
+
+  background-color: #48a6e080;
+
+  display: flex;
+  justify-content: flex-end;
+}
+footer a {
+  font-size: 1.7vmin;
+  margin: 0.5vmin 3vmin 0.5vmin -1vmin;
+}
