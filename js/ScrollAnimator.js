@@ -27,10 +27,13 @@ class ScrollAnimation {
 
 class ScrollAnimator {
   constructor(element) {
-    this.element = element;
     this.animations = [];
-
     element.onscroll = this.scroll.bind(this);
+
+    this.element =
+      element == document || element == window
+        ? document.documentElement
+        : element;
   }
 
   add(begin, end, func) {
@@ -38,7 +41,11 @@ class ScrollAnimator {
   }
 
   scroll() {
-    this.animations.forEach((anim) => anim.animate(this.scrollPercent()));
+    this.animate(this.scrollPercent());
+  }
+
+  animate(scrollPercent) {
+    this.animations.forEach((anim) => anim.animate(scrollPercent));
   }
 
   scrollPercent() {

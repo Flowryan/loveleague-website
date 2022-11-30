@@ -10,21 +10,19 @@ const RIGHT_PERCENT = 80;
 const CLOUD_SCALE = 2;
 const CLOUD_SCALED_TOP_VMIN = 5;
 
-main = document.getElementsByTagName('main')[0];
+// Für Parallax Scrolling aus dem Hintergrundbild "rauszoomen", damit das Bild genau 2x in den Viewport passt
+document.body.style.backgroundSize = 'auto 200vh';
+document.body.style.backgroundPosition = 'center 0%';
 
-// backgroundPosition ist im CSS auf center middle, weil es schöner aussieht, falls JS deaktiviert
-// Für das Parallax Scrolling muss es aber mit top beginnen
-main.style.backgroundPosition = 'center top';
-main.style.backgroundSize = BACKGROUND_SIZE;
-
-scrollAnimator = new ScrollAnimator(main);
+scrollAnimator = new ScrollAnimator(window);
 
 // Parallax Background
 scrollAnimator.add(
   0,
   1,
   function (progress) {
-    main.style.backgroundPosition = `50% ${progress * 100}%`;
+    // Hintergrundbild um Scrolling verschieben. Dadurch wirkt es so, als würde es mit halber Geschwindigkeit gescrollt.
+    document.body.style.backgroundPosition = `center ${progress * 100}%`;
   },
   'PS'
 );

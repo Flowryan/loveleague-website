@@ -1,44 +1,20 @@
-body {
-  margin: 0;
-  background-color: #1c87c9;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-weight: 600;
-  color: rgb(247, 189, 0);
-}
-
-main {
-  /* Breite auf Hintergrundbild beschränken.
-   * Das Bild ist 2560 x 1440 bzw. 16:9, ich möchte nur die Hälfte der Höhe anzeigen, um den Rest zum scrollen zu haben.
-   * Der maximal sichtbare Bereich ist also 16:4.5 bzw. 32:9. (355vh)
-   * Wird der Viewport noch breiter, wird aussen ein blauer Rand angezeigt. */
-  background-image: url('https://loveleague.de/images/background.png');
-  background-position: center center;
-  background-size: cover;
-  max-width: 355vh;
-  margin: auto; /*sichtbaren Bereich bei Anzeige des blauen Randes zentrieren */
-
-  /* Konfiguration für Scrolling */
-  max-height: 100vh;
-  overflow-y: auto;
+body,
+html {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
-/* custom scrollbar */
-::-webkit-scrollbar {
-  width: 20px;
-}
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #d6dee160;
-  border-radius: 20px;
-  border: 6px solid transparent;
-  background-clip: content-box;
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: #a8bbbf;
+body {
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 600;
+  color: rgb(247, 189, 0);
+
+  background-image: url('https://loveleague.de/images/background.png');
+  background-position: center;
+  background-size: cover;
+  background-color: #1c87c9;
+  background-repeat: no-repeat;
 }
 
 /* text modifications */
