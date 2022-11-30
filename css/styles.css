@@ -1,20 +1,25 @@
-body,
-html {
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 600;
   color: rgb(247, 189, 0);
 
-  background-image: url('https://loveleague.de/images/background.png');
+  background-image: url('../images/background.png');
   background-position: center;
   background-size: cover;
   background-color: #1c87c9;
   background-repeat: no-repeat;
+}
+
+/* scroll snapping */
+body,
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+section {
+  height: 100vh;
+  scroll-snap-align: start;
 }
 
 /* text modifications */
@@ -25,10 +30,12 @@ div.stroke a {
 div.gradient {
   background: -webkit-linear-gradient(rgb(255, 255, 0) 40%, rgb(255, 50, 0));
   -webkit-text-fill-color: transparent;
+  background-clip: text;
   -webkit-background-clip: text;
 }
 a:hover div.gradient {
   background: -webkit-linear-gradient(rgb(255, 255, 0) 15%, rgb(255, 50, 0));
+  background-clip: text;
   -webkit-background-clip: text;
 }
 div.shadow {
@@ -43,79 +50,85 @@ a {
   color: inherit;
 }
 
-nav {
-  position: fixed;
-  z-index: 10;
+/* base layout */
+nav,
+.content,
+footer {
+  /* dont stretch more than 16:9 */
+  width: 95%;
+  max-width: 177vh;
 
-  /* nicht breiter, als 3:2 damit die Wolken aussen noch in der Nähe sind */
-  width: 90%;
-  max-width: 150vh;
-
-  /* zentriert */
-  right: 0;
-  left: 0;
+  /* center */
   margin: auto;
 }
+nav,
+footer {
+  position: fixed;
+
+  /* center with fixed position */
+  right: 0;
+  left: 0;
+
+  /* show above content */
+  z-index: 10;
+}
+footer {
+  bottom: 0;
+  background-color: #48a6e080;
+  display: flex;
+  justify-content: flex-end;
+}
+footer a {
+  font-size: 1.7vmin;
+  margin: 0.5vmin 2vmin;
+}
+
+/* navigation clouds */
 a.cloud {
   position: absolute;
   margin-top: 1vh;
 
   background-size: 100% 100%;
 
-  width: 25%;
-  max-width: 25vh;
+  width: 26%;
+  max-width: 23vh;
   height: 10vmin;
 }
 a.cloud div.cloud-text {
   position: relative;
 
-  width: 100%;
   text-align: center;
-
-  font-size: 3.2vmin;
+  font-size: 3vmin;
 }
 #galery-cloud {
-  background-image: url('https://loveleague.de/images/Cloud_1.png');
+  background-image: url('../images/Cloud_1.png');
 }
 #galery-cloud div.cloud-text {
   top: 3.8vmin;
 }
 #loveleague-cloud {
-  background-image: url('https://loveleague.de/images/Cloud_2.png');
+  background-image: url('../images/Cloud_2.png');
   left: 40%;
   scale: 2;
   top: 5vmin;
 }
 #loveleague-cloud div.cloud-text {
-  top: 4.7vmin;
+  top: 4.8vmin;
 }
 #download-cloud {
-  background-image: url('https://loveleague.de/images/Cloud_3.png');
+  background-image: url('../images/Cloud_3.png');
   right: 0%;
 }
 #download-cloud div.cloud-text {
   top: 3.5vmin;
 }
 
-section {
-  height: 100vh;
-  width: 100%;
-  scroll-snap-align: start;
-}
-
+/* content */
 .content {
-  pointer-events: none; /*Scrollen durchreichen*/
-
   position: relative;
-  top: 26vmin;
+  top: 24vmin;
 
-  width: 95%;
-  max-width: 150vh; /*Aber nur bis 3:2, damit es mit den Wolken passt*/
-
-  height: calc(95vh - 26vmin);
-
-  /* zentriert */
-  margin: auto;
+  height: calc(99vh - 28vmin);
 
   background-color: #1c87c980;
 }
@@ -135,27 +148,8 @@ section {
   margin-top: 2vh;
 }
 .content .video {
-  pointer-events: all;
-
   margin: 4vmin 2vmin;
 
   height: calc(100% - 19vmin);
   max-height: 70vw;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-
-  width: 100%;
-  max-width: 355vh;
-
-  background-color: #48a6e080;
-
-  display: flex;
-  justify-content: flex-end;
-}
-footer a {
-  font-size: 1.7vmin;
-  margin: 0.5vmin 3vmin 0.5vmin -1vmin;
 }
