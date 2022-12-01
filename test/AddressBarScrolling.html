@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Love League</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      html,
+      body {
+        font-size: 30vmin;
+        height: 100%;
+        margin: 0;
+        scroll-snap-type: y mandatory;
+      }
+      section,
+      .viewportheight {
+        scroll-snap-align: start;
+      }
+      section {
+        height: calc(100% - 4px); /* subtract border */
+        border: 2px dotted;
+      }
+      .viewportheight {
+        height: calc(100vh - 4px);
+        border: 2px dotted;
+      }
+    </style>
+  </head>
+  <body>
+    <section style="color: blue">100% height</section>
+    <section style="color: red">100% height</section>
+    <div class="viewportheight" style="color: blue">100vh</div>
+    <div class="viewportheight" style="color: red">100vh</div>
+  </body>
+</html>
