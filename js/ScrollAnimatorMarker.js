@@ -2,17 +2,31 @@ class ScrollAnimatorMarker extends ScrollAnimator {
   constructor(element) {
     super(element);
 
-    console.log(
-      `[ScrollAnimator] Registered to ${element} with rootElement <${this.element.tagName}>.`
-    );
-
     this.sectionCount = this.element.scrollHeight / this.element.clientHeight;
     this.createCursorMarker();
     this.markers = {};
+
+    console.log(
+      `[ScrollAnimator] Registered to ${element} with rootElement <${this.element.tagName}> and ${this.sectionCount} sections.`
+    );
   }
 
   createCursorMarker() {
+    this.createMarker('absolute', -0.05, 'blue', '75px').innerHTML =
+      this.element.scrollHeight;
+    this.createMarker('absolute', -0.04, 'blue', '75px').innerHTML =
+      this.element.clientHeight;
+    this.createMarker('absolute', -0.03, 'blue', '75px').innerHTML =
+      this.sectionCount;
     this.createMarker('fixed', 0, 'blue', '95px').innerHTML = '---';
+    for (let i = 0; i < this.sectionCount; i++) {
+      this.createMarker(
+        'absolute',
+        i / (this.sectionCount - 1),
+        'black',
+        '75px'
+      ).innerHTML = `-${i}-`;
+    }
   }
 
   add(begin, end, func, id) {
@@ -54,7 +68,7 @@ class ScrollAnimatorMarker extends ScrollAnimator {
 
   createMarker(position, positionPercent, color, right) {
     let topPercent =
-      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + '%';
+      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + 'vh';
 
     const div = document.createElement('div');
     div.style.position = position;

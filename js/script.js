@@ -1,5 +1,3 @@
-const BACKGROUND_SIZE = '355vh';
-
 const LOVELEAGUE_CLOUD = 'loveleague-cloud';
 const GALERY_CLOUD = 'galery-cloud';
 const DOWNLOAD_CLOUD = 'download-cloud';
@@ -12,7 +10,7 @@ const CLOUD_SCALED_TOP_VMIN = 5;
 
 // Für Parallax Scrolling aus dem Hintergrundbild "rauszoomen", damit das Bild genau 2x in den Viewport passt
 document.body.style.backgroundSize = 'auto 200vh';
-document.body.style.backgroundPosition = 'center 0%';
+document.body.style.backgroundPosition = 'center 0vh';
 
 scrollAnimator = new ScrollAnimator(window);
 
@@ -20,15 +18,15 @@ scrollAnimator = new ScrollAnimator(window);
 scrollAnimator.add(
   0,
   1,
-  function (_, reverse) {
+  function (progress) {
     // Hintergrundbild um Scrolling verschieben. Dadurch wirkt es so, als würde es mit halber Geschwindigkeit gescrollt.
-    document.body.style.backgroundPosition = `center ${(reverse - 1) * 100}%`;
+    document.body.style.backgroundPosition = `center ${progress * 100}vh`;
   },
   'PS'
 );
 
 // Love League Cloud nach Links
-loveLeagueCloud = document.getElementById(LOVELEAGUE_CLOUD);
+let loveLeagueCloud = document.getElementById(LOVELEAGUE_CLOUD);
 scrollAnimator.add(
   0,
   0.2,
@@ -48,7 +46,7 @@ scrollAnimator.add(
 );
 
 // Galery Cloud in die Mitte
-galeryCloud = document.getElementById(GALERY_CLOUD);
+let galeryCloud = document.getElementById(GALERY_CLOUD);
 scrollAnimator.add(
   0,
   0.2,
@@ -99,7 +97,7 @@ scrollAnimator.add(
 );
 
 //  Download Cloud in die Mitte
-downloadCloud = document.getElementById(DOWNLOAD_CLOUD);
+let downloadCloud = document.getElementById(DOWNLOAD_CLOUD);
 scrollAnimator.add(
   0.5,
   0.7,

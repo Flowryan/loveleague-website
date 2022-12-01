@@ -1,5 +1,4 @@
 body {
-  margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 600;
   font-size: 2vmin;
@@ -15,24 +14,12 @@ body {
 /* scroll snapping */
 html,
 body {
+  margin: 0;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 section {
   scroll-snap-align: start;
-}
-
-/* 100% height per section, 100vh sucks with mobile adressbars */
-html,
-body,
-main,
-section {
-  height: 100%;
-}
-section:last-of-type {
-  /* hidden mobile addressbar causes 100% height to be less than 100vh
-   * thats no big problem in most cases but the last section wouldn't
-   * scroll the previous section out of the screen */
   height: 100vh;
 }
 
