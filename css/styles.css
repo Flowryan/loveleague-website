@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 600;
+  font-size: 2vmin;
   color: rgb(247, 189, 0);
 
   background-image: url('../images/background.png');
@@ -12,14 +13,69 @@ body {
 }
 
 /* scroll snapping */
-body,
-html {
+html,
+body {
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 section {
-  height: 100vh;
   scroll-snap-align: start;
+}
+
+/* 100% height per section, 100vh sucks with mobile adressbars */
+html,
+body,
+main,
+section {
+  height: 100%;
+}
+
+/* base layout */
+nav,
+.content,
+footer {
+  /* dont stretch more than 16:9 */
+  max-width: 177vh;
+
+  /* center */
+  margin: auto;
+}
+nav,
+.content {
+  width: 95%;
+}
+nav,
+footer {
+  position: fixed;
+
+  /* center with fixed position */
+  right: 0;
+  left: 0;
+
+  /* show above content */
+  z-index: 10;
+}
+nav {
+  margin-top: 1vmin;
+  height: 22vmin;
+}
+footer {
+  bottom: 0;
+  width: 100%;
+  background-color: #48a6e080;
+  display: flex;
+  justify-content: flex-end;
+}
+footer a {
+  margin: 0.1em 1em;
+}
+.content {
+  border-style: solid;
+
+  position: relative;
+  top: 25vmin;
+  height: calc(95% - 25vmin);
+  background-color: #1c87c980;
 }
 
 /* text modifications */
@@ -50,94 +106,47 @@ a {
   color: inherit;
 }
 
-/* base layout */
-nav,
-.content,
-footer {
-  /* dont stretch more than 16:9 */
-  width: 95%;
-  max-width: 177vh;
-
-  /* center */
-  margin: auto;
-}
-nav,
-footer {
-  position: fixed;
-
-  /* center with fixed position */
-  right: 0;
-  left: 0;
-
-  /* show above content */
-  z-index: 10;
-}
-footer {
-  bottom: 0;
-  background-color: #48a6e080;
-  display: flex;
-  justify-content: flex-end;
-}
-footer a {
-  font-size: 1.7vmin;
-  margin: 0.5vmin 2vmin;
-}
-
 /* navigation clouds */
 a.cloud {
   position: absolute;
-  margin-top: 1vh;
+  height: 50%; /* so selected cloud with scale*2 fits in */
+  width: 22vmin; /* same as nav height, so they have aspect-ratio 2:1 */
 
   background-size: 100% 100%;
-
-  width: 26%;
-  max-width: 23vh;
-  height: 10vmin;
 }
 a.cloud div.cloud-text {
   position: relative;
-
   text-align: center;
-  font-size: 3vmin;
+  font-size: 150%;
 }
 #galery-cloud {
   background-image: url('../images/Cloud_1.png');
 }
 #galery-cloud div.cloud-text {
-  top: 3.8vmin;
+  top: 45%;
 }
 #loveleague-cloud {
   background-image: url('../images/Cloud_2.png');
-  left: 40%;
+  left: calc(50% - 11vmin);
   scale: 2;
-  top: 5vmin;
+  top: 25%;
 }
 #loveleague-cloud div.cloud-text {
-  top: 4.8vmin;
+  top: 53%;
 }
 #download-cloud {
   background-image: url('../images/Cloud_3.png');
   right: 0%;
 }
 #download-cloud div.cloud-text {
-  top: 3.5vmin;
+  top: 40%;
 }
 
-/* content */
-.content {
-  position: relative;
-  top: 24vmin;
-
-  height: calc(99vh - 28vmin);
-
-  background-color: #1c87c980;
-}
+/* content details */
 .content .text {
   position: relative;
-  left: 2vmin;
-  top: 2vmin;
-  pointer-events: all;
-  font-size: 2vmin;
+  left: 2%;
+  top: 2%;
 }
 .content .text .title {
   font-size: 250%;
@@ -148,8 +157,9 @@ a.cloud div.cloud-text {
   margin-top: 2vh;
 }
 .content .video {
-  margin: 4vmin 2vmin;
+  border-style: dotted;
 
-  height: calc(100% - 19vmin);
-  max-height: 70vw;
+  position: static;
+  margin: 4vmin 2vmin;
+  height: calc(100% - 40vmin);
 }
