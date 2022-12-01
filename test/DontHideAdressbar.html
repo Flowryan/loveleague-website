@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Love League</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      html,
+      body {
+        font-size: 16vmin;
+        height: 100%;
+        margin: 0;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+
+      .stats {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        font-size: 50%;
+        color: red;
+        text-align: right;
+      }
+      .stats .description {
+        position: relative;
+        top: -1em;
+        font-size: 25%;
+      }
+      .stats .left {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+      }
+
+      main {
+        height: var(--vvh);
+      }
+
+      section {
+        height: 100%;
+        background: linear-gradient(to bottom, #f3f463, #3b409e);
+        border: 2px dotted;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="stats">
+      <div id="innerHeight"></div>
+      <div class="description">window.innerHeight</div>
+
+      <div id="clientHeight"></div>
+      <div class="description">main.clientHeight</div>
+
+      <div id="scrollHeight"></div>
+      <div class="description">document.body.scrollHeight</div>
+
+      <div class="left">
+        <div id="switcher"></div>
+        <div class="description">main.style.height</div>
+      </div>
+    </div>
+
+    <main>
+      <section style="color: blue">One</section>
+      <section style="color: red">Two</section>
+    </main>
+  </body>
+
+  <script>
+    function updateStats() {
+      let main = document.querySelector('main');
+
+      document.getElementById('innerHeight').innerHTML = window.innerHeight;
+      document.getElementById('clientHeight').innerHTML = main.clientHeight;
+      document.getElementById('scrollHeight').innerHTML =
+        document.body.scrollHeight;
+    }
+    ['load', 'resize'].forEach((evt) =>
+      window.addEventListener(evt, updateStats)
+    );
+
+    var switcher = document.getElementById('switcher');
+    switcher.addEventListener('click', () => {
+      switchIt();
+    });
+
+    var switched;
+    function switchIt() {
+      let height;
+      if (switched) {
+        height = '100vh';
+      } else {
+        height = '100%';
+      }
+      document.querySelector(':root').style.setProperty('--vvh', height);
+      document.querySelector('#switcher').innerHTML = height;
+
+      switched = !switched;
+    }
+    switchIt();
+  </script>
+</html>
