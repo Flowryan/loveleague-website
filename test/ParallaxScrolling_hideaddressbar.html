@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Love League</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      /* scroll snapping */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+      }
+      main {
+        position: relative;
+        margin: 0;
+        width: 100%;
+        height: 100vh;
+        max-height: 100%;
+        overflow-y: auto;
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
+
+        background-repeat: no-repeat;
+        background-color: #1c87c9;
+        background-image: url('https://loveleague.de/images/background.png');
+      }
+      section {
+        position: relative;
+        scroll-snap-align: start;
+        height: 100vh;
+        width: 100%;
+      }
+      content {
+        position: absolute;
+        top: 25%;
+        left: 25%;
+        width: 50%;
+        height: 50%;
+        background-color: #1c87c9a0;
+        border-style: dotted;
+        font-size: 9vmin;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section><content>This example is smooth on mobile</content></section>
+      <section>
+        <content>
+          Scroll Snapping seems to Hide/Show the addressbar mutltiple times
+          causeing stuttering
+        </content>
+      </section>
+      <section>
+        <content>There is a white border at the bottom</content>
+      </section>
+    </main>
+  </body>
+
+  <script src="../js/ScrollAnimator.js"></script>
+  <script src="../js/ScrollAnimatorMarker.js"></script>
+  <script>
+    let main = document.querySelector('main');
+    main.style.backgroundSize = 'auto 200vh';
+    main.style.backgroundPosition = 'center 0vh';
+
+    scrollAnimator = new ScrollAnimator(document.querySelector('main'));
+
+    // Parallax Background
+    scrollAnimator.add(
+      0,
+      1,
+      function (progress, reversed) {
+        main.style.backgroundPosition = `center ${-progress * 100}vh`;
+      },
+      'PS'
+    );
+  </script>
+</html>

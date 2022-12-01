@@ -12,13 +12,15 @@ class ScrollAnimatorMarker extends ScrollAnimator {
   }
 
   createCursorMarker() {
+    this.createMarker('fixed', 0, 'blue', '95px').innerHTML = '---';
+
     this.createMarker('absolute', -0.05, 'blue', '75px').innerHTML =
       this.element.scrollHeight;
     this.createMarker('absolute', -0.04, 'blue', '75px').innerHTML =
       this.element.clientHeight;
     this.createMarker('absolute', -0.03, 'blue', '75px').innerHTML =
       this.sectionCount;
-    this.createMarker('fixed', 0, 'blue', '95px').innerHTML = '---';
+
     for (let i = 0; i < this.sectionCount; i++) {
       this.createMarker(
         'absolute',
@@ -68,7 +70,7 @@ class ScrollAnimatorMarker extends ScrollAnimator {
 
   createMarker(position, positionPercent, color, right) {
     let topPercent =
-      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + 'vh';
+      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + '%';
 
     const div = document.createElement('div');
     div.style.position = position;
