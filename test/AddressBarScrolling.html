@@ -18,18 +18,38 @@
       }
       section {
         height: calc(100% - 4px); /* subtract border */
+        background: linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 1) 30%,
+          rgba(255, 255, 255, 1) 100%
+        );
         border: 2px dotted;
       }
-      .viewportheight {
+      section.viewportheight {
         height: calc(100vh - 4px);
+      }
+      #innerHeight {
+        position: fixed;
+        height: 1em;
+        bottom: 0;
+      }
+      #vhpercentdiff {
+        height: calc(100vh - 100%);
         border: 2px dotted;
       }
     </style>
+    <script>
+      window.addEventListener('resize', () => {
+        document.getElementById('innerHeight').innerHTML = window.innerHeight;
+      });
+    </script>
   </head>
   <body>
-    <section style="color: blue">100% height</section>
+    <div id="innerHeight"></div>
+    <div id="vhpercentdiff"></div>
+    <section class="viewportheight" style="color: blue">100vh</section>
     <section style="color: red">100% height</section>
-    <div class="viewportheight" style="color: blue">100vh</div>
-    <div class="viewportheight" style="color: red">100vh</div>
+    <section class="viewportheight" style="color: red">100vh</section>
+    <section style="color: blue">100% height</section>
   </body>
 </html>
