@@ -7,6 +7,7 @@
     <style>
       html,
       body {
+        background-color: red;
         font-size: 16vmin;
         height: 100%;
         margin: 0;
@@ -33,13 +34,15 @@
       }
 
       main {
-        height: var(--vvh);
+        margin: 0;
+        height: 100vh;
+        max-height: var(--vvh);
+        overflow-y: auto;
       }
 
       section {
         height: 100%;
         background: linear-gradient(to bottom, #f3f463, #3b409e);
-        border: 2px dotted;
       }
     </style>
   </head>
@@ -47,12 +50,13 @@
     <div class="stats">
       <div id="innerHeight"></div>
       <div class="description">window.innerHeight</div>
+      <div id="scrollHeight"></div>
+      <div class="description">document.body.scrollHeight</div>
 
       <div id="clientHeight"></div>
       <div class="description">main.clientHeight</div>
-
-      <div id="scrollHeight"></div>
-      <div class="description">document.body.scrollHeight</div>
+      <div id="mainscrollHeight"></div>
+      <div class="description">main.scrollHeight</div>
 
       <div class="left">
         <div id="switcher"></div>
@@ -68,35 +72,64 @@
 
   <script>
     function updateStats() {
-      let main = document.querySelector('main');
-
       document.getElementById('innerHeight').innerHTML = window.innerHeight;
-      document.getElementById('clientHeight').innerHTML = main.clientHeight;
       document.getElementById('scrollHeight').innerHTML =
         document.body.scrollHeight;
+
+      let main = document.querySelector('main');
+      document.getElementById('clientHeight').innerHTML = main.clientHeight;
+      document.getElementById('mainscrollHeight').innerHTML = main.scrollHeight;
     }
-    ['load', 'resize'].forEach((evt) =>
-      window.addEventListener(evt, updateStats)
-    );
+    ['resize'].forEach((evt) => window.addEventListener(evt, updateStats));
 
     var switcher = document.getElementById('switcher');
     switcher.addEventListener('click', () => {
       switchIt();
     });
 
-    var switched;
+    var switched = -1;
     function switchIt() {
-      let height;
-      if (switched) {
-        height = '100vh';
-      } else {
-        height = '100%';
+      switched++;
+      switch (switched % 5) {
+        case 0:
+          setHeight('100vh');
+          break;
+        case 1:
+          setHeight('100%');
+          break;
+        case 2:
+          setHeight('calc(100% - 1px)');
+          break;
+        case 3:
+          setHeight('calc(100vh - 1px)');
+          break;
+        case 4:
+          setHeight('100%', '100%*');
+          break;
       }
-      document.querySelector(':root').style.setProperty('--vvh', height);
-      document.querySelector('#switcher').innerHTML = height;
 
-      switched = !switched;
+      updateStats();
     }
+
+    function setHeight(height, heightDescription) {
+      heightDescription ??= height;
+      document.querySelector(':root').style.setProperty('--vvh', height);
+      document.querySelector('#switcher').innerHTML = heightDescription;
+    }
+
+    ['resize'].forEach((evt) =>
+      window.addEventListener(evt, changeToSmallerAfterResize)
+    );
+    function changeToSmallerAfterResize() {
+      if (switched % 5 == 4) {
+        if (window.innerHeight > document.body.scrollHeight) {
+          setHeight('calc(100vh - 1px)', 'calc(100vh - 1px)*');
+        } else {
+          setHeight('100%', '100%*');
+        }
+      }
+    }
+
     switchIt();
   </script>
 </html>
