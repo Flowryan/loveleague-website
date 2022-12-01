@@ -2,7 +2,9 @@ class ScrollAnimatorMarker extends ScrollAnimator {
   constructor(element) {
     super(element);
 
-    this.sectionCount = this.element.scrollHeight / this.element.clientHeight;
+    this.sectionCount = Math.round(
+      this.element.scrollHeight / this.element.clientHeight
+    );
     this.createCursorMarker();
     this.markers = {};
 
@@ -70,7 +72,7 @@ class ScrollAnimatorMarker extends ScrollAnimator {
 
   createMarker(position, positionPercent, color, right) {
     let topPercent =
-      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + '%';
+      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + 'vh';
 
     const div = document.createElement('div');
     div.style.position = position;
