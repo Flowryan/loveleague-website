@@ -20,9 +20,9 @@ scrollAnimator = new ScrollAnimator(window);
 scrollAnimator.add(
   0,
   1,
-  function (progress) {
+  function (_, reverse) {
     // Hintergrundbild um Scrolling verschieben. Dadurch wirkt es so, als würde es mit halber Geschwindigkeit gescrollt.
-    document.body.style.backgroundPosition = `center ${progress * 100}%`;
+    document.body.style.backgroundPosition = `center ${(reverse - 1) * 100}%`;
   },
   'PS'
 );

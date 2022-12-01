@@ -29,6 +29,12 @@ main,
 section {
   height: 100%;
 }
+section:last-of-type {
+  /* hidden mobile addressbar causes 100% height to be less than 100vh
+   * thats no big problem in most cases but the last section wouldn't
+   * scroll the previous section out of the screen */
+  height: 100vh;
+}
 
 /* base layout */
 nav,
@@ -70,8 +76,6 @@ footer a {
   margin: 0.1em 1em;
 }
 .content {
-  border-style: solid;
-
   position: relative;
   top: 25vmin;
   height: calc(95% - 25vmin);
@@ -157,8 +161,6 @@ a.cloud div.cloud-text {
   margin-top: 2vh;
 }
 .content .video {
-  border-style: dotted;
-
   position: static;
   margin: 4vmin 2vmin;
   height: calc(100% - 40vmin);
