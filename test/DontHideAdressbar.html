@@ -80,7 +80,6 @@
       document.getElementById('clientHeight').innerHTML = main.clientHeight;
       document.getElementById('mainscrollHeight').innerHTML = main.scrollHeight;
     }
-    ['resize'].forEach((evt) => window.addEventListener(evt, updateStats));
 
     var switcher = document.getElementById('switcher');
     switcher.addEventListener('click', () => {
@@ -117,10 +116,8 @@
       document.querySelector('#switcher').innerHTML = heightDescription;
     }
 
-    ['resize'].forEach((evt) =>
-      window.addEventListener(evt, changeToSmallerAfterResize)
-    );
-    function changeToSmallerAfterResize() {
+    ['resize'].forEach((evt) => window.addEventListener(evt, resizeContent));
+    function resizeContent() {
       if (switched % 5 == 4) {
         if (window.innerHeight > document.body.scrollHeight) {
           setHeight('calc(100vh - 1px)', 'calc(100vh - 1px)*');
@@ -128,6 +125,7 @@
           setHeight('100%', '100%*');
         }
       }
+      updateStats();
     }
 
     switchIt();
