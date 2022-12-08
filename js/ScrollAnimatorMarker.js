@@ -1,88 +1,108 @@
 class ScrollAnimatorMarker extends ScrollAnimator {
-  constructor(element) {
-    super(element);
+  constructor(showPercentMarker) {
+    super();
+    console.log('[ScrollAnimatorMarker] Registered.');
 
-    this.sectionCount = Math.round(
-      this.element.scrollHeight / this.element.clientHeight
-    );
-    this.createCursorMarker();
+    this.TEXT_COLOR = 'white';
+    this.MARKER_OFFSET = '40vh';
+
+    this.BEGIN = { color: 'green', right: '200px' };
+    this.END = { color: 'red', right: '0px' };
+    this.CURSOR = { color: 'blue', right: '100px' };
+
     this.markers = {};
+    this.container = this.createContainer(document.documentElement);
+    this.cursor = this.createCursorMarker();
 
-    console.log(
-      `[ScrollAnimator] Registered to ${element} with rootElement <${this.element.tagName}> and ${this.sectionCount} sections.`
-    );
+    if (showPercentMarker) {
+      this.createPercentMarker();
+    }
+
+    window.addEventListener('resize', this.repositionMarkers.bind(this));
+  }
+
+  repositionMarkers() {
+    /* required if mobile addressbar gets hidden and window.innerHeight increased */
+    console.log('[ScrollAnimatorMarker] resize -> reposition markers.');
+    for (var key in this.markers) {
+      let marker = this.markers[key];
+      marker.style.top = this.getTopPercent(marker.positionPercent);
+    }
+  }
+
+  createContainer(parent) {
+    let container = document.createElement('markers');
+    parent.appendChild(container);
+
+    container.style.position = 'absolute';
+    container.style.right = container.style.top = 0;
+    container.style.height = container.style.width = '100%';
+    container.style.color = this.TEXT_COLOR;
+    return container;
   }
 
   createCursorMarker() {
-    this.createMarker('fixed', 0, 'blue', '95px').innerHTML = '---';
+    let cursor = this.createMarker('fixed', 0, this.CURSOR);
+    cursor.style.zIndex = 1;
+    cursor.innerHTML = this.getCursorText(0);
+    return cursor;
+  }
 
-    this.createMarker('absolute', -0.05, 'blue', '75px').innerHTML =
-      this.element.scrollHeight;
-    this.createMarker('absolute', -0.04, 'blue', '75px').innerHTML =
-      this.element.clientHeight;
-    this.createMarker('absolute', -0.03, 'blue', '75px').innerHTML =
-      this.sectionCount;
+  getCursorText(scrollPercent) {
+    return `=${(scrollPercent * 100).toFixed(1)}%=`;
+  }
 
-    for (let i = 0; i < this.sectionCount; i++) {
-      this.createMarker(
-        'absolute',
-        i / (this.sectionCount - 1),
-        'black',
-        '75px'
-      ).innerHTML = `-${i}-`;
+  createPercentMarker() {
+    for (let i = 0; i <= 10; i++) {
+      this.addMarker(i / 10, this.CURSOR, i * 10 + '%');
     }
   }
 
   add(begin, end, func, id) {
     super.add(begin, end, func);
-    this.createAnimationMarkers(begin, end, id);
+    this.createAnimationMarkers(begin, end, id ?? this.animations.length);
   }
 
   animate(scrollPercent) {
-    // console.log(`[ScrollAnimator] animate(${scrollPercent})`);
+    this.cursor.innerHTML = this.getCursorText(scrollPercent);
     super.animate(scrollPercent);
   }
 
   createAnimationMarkers(begin, end, id) {
-    this.addMarker(begin, 'green', id);
-    this.addMarker(end, 'red', id);
+    this.addMarker(begin, this.BEGIN, id);
+    this.addMarker(end, this.END, id);
   }
 
-  addMarker(positionPercent, color, id) {
+  addMarker(positionPercent, type, id) {
     console.log(
-      `[ScrollAnimator] addMarker(${id}, ${positionPercent}, ${color})`
+      `[ScrollAnimatorMarker] addMarker(${id}, ${positionPercent}, ${type.color})`
     );
 
-    let key = `${positionPercent}_${color}`;
-    let marker = this.markers[key];
+    let key = `${positionPercent}_${type.color}`;
     if (!(key in this.markers)) {
-      let right;
-      if (color == 'green') {
-        right = '100px';
-      } else {
-        right = '0px';
-      }
-
-      marker = this.createMarker('absolute', positionPercent, color, right);
-      this.markers[key] = marker;
+      this.markers[key] = this.createMarker('absolute', positionPercent, type);
     }
-
-    marker.innerHTML += ` ${id ? id : this.animations.length}`;
+    this.markers[key].innerHTML += ` ${id}`;
   }
 
-  createMarker(position, positionPercent, color, right) {
-    let topPercent =
-      (0.5 + positionPercent * (this.sectionCount - 1)) * 100 + 'vh';
+  getTopPercent(positionPercent) {
+    return `calc(${this.MARKER_OFFSET} + ${
+      positionPercent *
+      (document.documentElement.scrollHeight - window.innerHeight)
+    }px)`;
+  }
 
-    const div = document.createElement('div');
-    div.style.position = position;
-    div.style.height = '20px';
-    div.style.color = 'white';
-    div.style.top = topPercent;
-    div.style.background = color;
-    div.style.right = right;
-    this.element.appendChild(div);
-    return div;
+  createMarker(position, positionPercent, type) {
+    const marker = document.createElement('marker');
+    this.container.appendChild(marker);
+    marker.positionPercent = positionPercent;
+
+    marker.style.position = position;
+    marker.style.top = this.getTopPercent(positionPercent);
+    marker.style.background = type.color;
+    marker.style.right = type.right;
+
+    return marker;
   }
 }
 

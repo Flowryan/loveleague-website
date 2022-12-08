@@ -1,12 +1,9 @@
 class ScrollAnimator {
-  constructor(element) {
+  constructor() {
     this.animations = [];
-    element.onscroll = this.scroll.bind(this);
-
-    this.element =
-      element == document || element == window
-        ? document.documentElement
-        : element;
+    ['scroll', 'resize'].forEach((evt) =>
+      window.addEventListener(evt, this.scroll.bind(this))
+    );
   }
 
   add(begin, end, func) {
@@ -23,8 +20,8 @@ class ScrollAnimator {
 
   scrollPercent() {
     return (
-      this.element.scrollTop /
-      (this.element.scrollHeight - this.element.clientHeight)
+      document.documentElement.scrollTop /
+      (document.documentElement.scrollHeight - window.innerHeight)
     );
   }
 }
