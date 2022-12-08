@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<!-- code by webdevtrick ( https://webdevtrick.com )-->
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>JavaScript Animated scroll percentage | Webdevtrick.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <style>
+      /** code by webdevtrick ( https://webdevtrick.com ) **/
+      body {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+        background-color: #e8e4e4;
+        font-family: 'Oswald', sans-serif;
+      }
+      #scroll-percent {
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        color: #000;
+        margin: 0;
+        padding: 0;
+      }
+
+      #percentage-value {
+        position: fixed;
+        bottom: 5%;
+        right: 5%;
+        height: 150px;
+        width: 150px;
+        color: #fb3c3f;
+        background-color: white;
+        text-align: center;
+        line-height: 150px;
+        border-radius: 50%;
+        box-shadow: 1px 1px 8px 2px #fb3c3f, -1px -1px 8px 2px #fb3c3f;
+        font-size: 3em;
+        z-index: 2;
+      }
+
+      [data-scrollPercentage] .percentage {
+        display: inline-block;
+        background-color: #fb3c3f;
+        height: 6px;
+        width: 0;
+      }
+
+      #bottom {
+        border: 2px solid blue;
+        position: absolute;
+        top: 3950px;
+        background-color: yellow;
+        height: 46px;
+        width: calc(100% - 4px);
+      }
+
+      #bottom-fixed {
+        position: fixed;
+        bottom: 0px;
+
+        background-color: #fb3c3f90;
+        height: 40px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #top-fixed {
+        position: fixed;
+        top: calc(100vh - 120px);
+
+        background-color: #003c3f90;
+        height: 40px;
+        width: 100%;
+        z-index: 1;
+      }
+
+      #bottom-top-fixed {
+        position: fixed;
+        top: 20px;
+        bottom: 120px;
+
+        background-color: #993c3f90;
+        width: 100%;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="scroll-percent" data-scrollPercentage>
+      <div class="percentage">&nbsp;</div>
+    </div>
+    <div id="percentage-value"></div>
+    <div id="bottom-fixed">fix</div>
+    <div id="top-fixed">moved by addressbar</div>
+    <div id="bottom-top-fixed">scaled by addressbar (delayed?)</div>
+    <div style="height: 4000px">
+      <div id="bottom">
+        original code by webdevtrick ( https://webdevtrick.com )
+      </div>
+    </div>
+
+    <script>
+      /** code by webdevtrick ( https://webdevtrick.com ) **/
+      const updateScrollPercentage = function () {
+        const heightOfWindow = window.innerHeight,
+          contentScrolled = window.pageYOffset,
+          bodyHeight = document.body.offsetHeight,
+          percentage = document.querySelector(
+            '[data-scrollPercentage] .percentage'
+          );
+        percentageVal = document.querySelector('#percentage-value');
+
+        if (bodyHeight - contentScrolled <= heightOfWindow) {
+          percentageVal.textContent = percentage.style.width = '100%';
+        } else {
+          const total = bodyHeight - heightOfWindow,
+            got = contentScrolled,
+            percent = parseInt((got / total) * 100);
+          percentageVal.textContent = percentage.style.width = percent + '%';
+        }
+      };
+
+      window.addEventListener('scroll', updateScrollPercentage);
+      window.addEventListener('resize', updateScrollPercentage);
+    </script>
+  </body>
+</html>

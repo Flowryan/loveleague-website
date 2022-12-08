@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Love League</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <style>
+      html,
+      body {
+        margin: 0;
+      }
+      section {
+        border: 2px dotted;
+        height: calc(100vh - 4px);
+      }
+
+      div {
+        top: 50%;
+        --height: 20px;
+        width: calc(100% - 4px);
+        border: 2px dashed;
+        text-align: center;
+        --line-height: 50px;
+      }
+
+      div.fixed {
+        color: red;
+        position: fixed;
+      }
+
+      div.absolute {
+        position: absolute;
+        color: blue;
+      }
+
+      div.absolutevh {
+        position: absolute;
+        top: 50vh;
+        color: orange;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="absolute">top: 50% (absolute)</div>
+    <div class="absolutevh">top: 50vh (absolute)</div>
+    <div class="fixed">top: 50% (fixed)</div>
+    <section>
+      This page shows the difference between 50% height and 50vh on mobile
+      devices.<br />
+      You can also see that a fixed element with 50% height is below an absolute
+      element since fixed elements relates to the visable height.
+    </section>
+    <section></section>
+  </body>
+</html>
