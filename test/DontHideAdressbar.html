@@ -14,6 +14,16 @@
         font-family: Verdana, Geneva, Tahoma, sans-serif;
       }
 
+      #log {
+        position: fixed;
+        left: 0;
+        bottom: 1em;
+      }
+
+      #log div {
+        font-size: 20%;
+      }
+
       .stats {
         position: fixed;
         right: 0;
@@ -38,16 +48,23 @@
         height: 100vh;
         max-height: var(--vvh);
         overflow-y: auto;
+
+        scroll-snap-type: y mandatory;
+        scroll-behavior: smooth;
       }
 
       section {
         height: 100%;
         background: linear-gradient(to bottom, #f3f463, #3b409e);
+        scroll-snap-align: start;
       }
     </style>
   </head>
   <body>
+    <div id="log"></div>
     <div class="stats">
+      <div><a href="#one">#ONE</a></div>
+      <div onclick="document.querySelector('#two').scrollIntoView();">#TWO</div>
       <div id="innerHeight"></div>
       <div class="description">window.innerHeight</div>
       <div id="scrollHeight"></div>
@@ -65,8 +82,8 @@
     </div>
 
     <main>
-      <section style="color: blue">One</section>
-      <section style="color: red">Two</section>
+      <section id="one" style="color: blue">One</section>
+      <section id="two" style="color: red">Two</section>
     </main>
   </body>
 
@@ -81,13 +98,9 @@
       document.getElementById('mainscrollHeight').innerHTML = main.scrollHeight;
     }
 
-    var switcher = document.getElementById('switcher');
-    switcher.addEventListener('click', () => {
-      switchIt();
-    });
-
     var switched = -1;
     function switchIt() {
+      log('switched');
       switched++;
       switch (switched % 5) {
         case 0:
@@ -114,10 +127,12 @@
       heightDescription ??= height;
       document.querySelector(':root').style.setProperty('--vvh', height);
       document.querySelector('#switcher').innerHTML = heightDescription;
+      document.querySelector('section').scrollIntoView();
     }
 
     ['resize'].forEach((evt) => window.addEventListener(evt, resizeContent));
     function resizeContent() {
+      log('resized');
       if (switched % 5 == 4) {
         if (window.innerHeight > document.body.scrollHeight) {
           setHeight('calc(100vh - 1px)', 'calc(100vh - 1px)*');
@@ -126,6 +141,27 @@
         }
       }
       updateStats();
+    }
+    /*
+    window.addEventListener('scroll', () => log('scrolling window'));
+    document.body.addEventListener('scroll', () => log('scrolling body'));
+    document
+      .querySelector('main')
+      .addEventListener('scroll', () => log('scrolling main'));
+*/
+    var switcher = document.getElementById('switcher');
+    switcher.addEventListener('click', () => {
+      switchIt();
+    });
+
+    function log(text) {
+      let now = new Date();
+
+      const div = document.createElement('div');
+      div.style.position = 'relative';
+      div.style.top = '1em';
+      div.innerHTML = `[${now.getMinutes()}:${now.getSeconds()}:${now.getMilliseconds()}] ${text}`;
+      document.querySelector('#log').appendChild(div);
     }
 
     switchIt();
