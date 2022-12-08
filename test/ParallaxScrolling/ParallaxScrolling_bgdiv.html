@@ -41,22 +41,24 @@
   </head>
   <body>
     <div id="background"></div>
-    <section><content>This example is smooth on mobile</content></section>
+    <section>
+      <content>The parallaxScrolling effect is smooth even on mobile</content>
+    </section>
     <section>
       <content>
-        Scroll Snapping seems to Hide/Show the addressbar mutltiple times
+        Scroll Snapping still seems to Hide/Show the addressbar mutltiple times
         causeing stuttering
       </content>
     </section>
-    <section><content>There is a white border at the bottom</content></section>
+    <section><content></content></section>
   </body>
 
   <script src="../../js/ScrollAnimator.js"></script>
   <script src="../../js/ScrollAnimatorMarker.js"></script>
   <script>
-    document.getElementById('background').style.backgroundSize = 'auto 200vh';
-    document.getElementById('background').style.backgroundPosition =
-      'center 0vh';
+    let bgElement = document.getElementById('background');
+    bgElement.style.backgroundSize = 'auto 200vh';
+    bgElement.style.backgroundPosition = 'center 0vh';
 
     scrollAnimator = new ScrollAnimator(window);
 
@@ -64,10 +66,9 @@
     scrollAnimator.add(
       0,
       1,
-      function (progress, reversed) {
-        document.getElementById(
-          'background'
-        ).style.backgroundPosition = `center ${-progress * 100}vh`;
+      function (progress) {
+        // Hintergrundbild um Scrolling verschieben. Dadurch wirkt es so, als würde es mit halber Geschwindigkeit gescrollt.
+        bgElement.style.backgroundPosition = `center ${-progress * 100}vh`;
       },
       'PS'
     );
