@@ -1,48 +1,40 @@
 class ScrollAnimatorMarker extends ScrollAnimator {
-  constructor(showPercentMarker) {
-    super();
-    console.log('[ScrollAnimatorMarker] Registered.');
+  constructor(scrollable, showPercentMarker) {
+    super(scrollable);
+    console.log("[ScrollAnimatorMarker] Registered.");
 
-    this.TEXT_COLOR = 'white';
-    this.MARKER_OFFSET = '40vh';
+    this.TEXT_COLOR = "white";
+    this.MARKER_OFFSET = "40vh";
 
-    this.BEGIN = { color: 'green', right: '200px' };
-    this.END = { color: 'red', right: '0px' };
-    this.CURSOR = { color: 'blue', right: '100px' };
+    this.BEGIN = { color: "green", right: "10em" };
+    this.END = { color: "red", right: "0em" };
+    this.CURSOR = { color: "blue", right: "5em" };
 
     this.markers = {};
-    this.container = this.createContainer(document.documentElement);
+    this.container = this.createContainer(scrollable);
     this.cursor = this.createCursorMarker();
 
     if (showPercentMarker) {
       this.createPercentMarker();
     }
-
-    window.addEventListener('resize', this.repositionMarkers.bind(this));
-  }
-
-  repositionMarkers() {
-    /* required if mobile addressbar gets hidden and window.innerHeight increased */
-    console.log('[ScrollAnimatorMarker] resize -> reposition markers.');
-    for (var key in this.markers) {
-      let marker = this.markers[key];
-      marker.style.top = this.getTopPercent(marker.positionPercent);
-    }
   }
 
   createContainer(parent) {
-    let container = document.createElement('markers');
-    parent.appendChild(container);
+    let container = document.createElement("scrollContainer");
+    //container.innerHTML = parent.innerHTML;
+    //parent.innerHTML = "";
+    parent.insertBefore(container, parent.firstChild);
 
-    container.style.position = 'absolute';
-    container.style.right = container.style.top = 0;
-    container.style.height = container.style.width = '100%';
+    container.style.position = "absolute";
+    container.style.width="100%";
     container.style.color = this.TEXT_COLOR;
+    container.style.fontSize = "3vmin";
+    container.style.zIndex = 10;
     return container;
   }
 
   createCursorMarker() {
-    let cursor = this.createMarker('fixed', 0, this.CURSOR);
+    let cursor = this.createMarker("fixed", 0, this.CURSOR);
     cursor.style.zIndex = 1;
     cursor.innerHTML = this.getCursorText(0);
     return cursor;
@@ -54,7 +46,7 @@ class ScrollAnimatorMarker extends ScrollAnimator {
 
   createPercentMarker() {
     for (let i = 0; i <= 10; i++) {
-      this.addMarker(i / 10, this.CURSOR, i * 10 + '%');
+      this.addMarker(i / 10, this.CURSOR, i * 10 + "%");
     }
   }
 
@@ -64,8 +56,22 @@ class ScrollAnimatorMarker extends ScrollAnimator {
   }
 
   animate(scrollPercent) {
-    this.cursor.innerHTML = this.getCursorText(scrollPercent);
     super.animate(scrollPercent);
+    this.cursor.innerHTML = this.getCursorText(scrollPercent);
+  }
+
+  resize() {
+    super.resize();
+    this.repositionMarkers();
+  }
+
+  repositionMarkers() {
+    /* required if mobile addressbar gets hidden and window.innerHeight increases */
+    console.log("[ScrollAnimatorMarker] resize -> reposition markers.");
+    for (var key in this.markers) {
+      let marker = this.markers[key];
+      marker.style.top = this.getTopPercent(marker.positionPercent);
+    }
   }
 
   createAnimationMarkers(begin, end, id) {
@@ -80,7 +86,7 @@ class ScrollAnimatorMarker extends ScrollAnimator {
 
     let key = `${positionPercent}_${type.color}`;
     if (!(key in this.markers)) {
-      this.markers[key] = this.createMarker('absolute', positionPercent, type);
+      this.markers[key] = this.createMarker("absolute", positionPercent, type);
     }
     this.markers[key].innerHTML += ` ${id}`;
   }
@@ -88,12 +94,12 @@ class ScrollAnimatorMarker extends ScrollAnimator {
   getTopPercent(positionPercent) {
     return `calc(${this.MARKER_OFFSET} + ${
       positionPercent *
-      (document.documentElement.scrollHeight - window.innerHeight)
+      (this.scrollable.scrollHeight - this.scrollable.clientHeight)
     }px)`;
   }
 
   createMarker(position, positionPercent, type) {
-    const marker = document.createElement('marker');
+    const marker = document.createElement("marker");
     this.container.appendChild(marker);
     marker.positionPercent = positionPercent;
 

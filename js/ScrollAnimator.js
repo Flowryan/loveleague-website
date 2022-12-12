@@ -1,9 +1,10 @@
 class ScrollAnimator {
-  constructor() {
+  constructor(scrollable) {
     this.animations = [];
-    ['scroll', 'resize'].forEach((evt) =>
-      window.addEventListener(evt, this.scroll.bind(this))
-    );
+    this.scrollable = scrollable;
+
+    scrollable.onscroll = this.scroll.bind(this);
+    document.body.onresize = this.resize.bind(this);
   }
 
   add(begin, end, func) {
@@ -14,14 +15,18 @@ class ScrollAnimator {
     this.animate(this.scrollPercent());
   }
 
+  resize() {
+    this.scroll();
+  }
+
   animate(scrollPercent) {
     this.animations.forEach((anim) => anim.animate(scrollPercent));
   }
 
   scrollPercent() {
     return (
-      document.documentElement.scrollTop /
-      (document.documentElement.scrollHeight - window.innerHeight)
+      this.scrollable.scrollTop /
+      (this.scrollable.scrollHeight - this.scrollable.clientHeight)
     );
   }
 }
