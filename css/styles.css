@@ -60,14 +60,15 @@ footer {
   justify-content: flex-end;
 }
 footer a {
-  margin: 0.1em 2.5%;
+  margin-right: 1em;
 }
 content {
   position: relative;
   display: block;
   top: 25vmin;
-  height: calc(98% - 25vmin - 1.2em);
+  height: calc(98% - 27vmin - 1.2em);
   background-color: #1c87c980;
+  padding: 1vmin 2vmin;
 }
 
 /* background */
@@ -96,10 +97,8 @@ div.gradient {
   -webkit-background-clip: text;
 }
 @media (hover: hover) {
-  a:hover div.gradient {
-    background: -webkit-linear-gradient(rgb(255, 255, 0) 15%, rgb(255, 50, 0));
-    background-clip: text;
-    -webkit-background-clip: text;
+  a:hover {
+    filter: hue-rotate(-25deg);
   }
 }
 div.shadow {
@@ -152,7 +151,6 @@ a.cloud div.cloud-text {
 
 /* content details */
 content .text {
-  position: relative;
   left: 2%;
   top: 2%;
 }
@@ -162,10 +160,8 @@ content .text .title {
 }
 content .text .big {
   font-size: 175%;
-  margin-top: 2vh;
 }
 content .video {
-  position: static;
-  margin: 4vmin 2vmin;
-  height: calc(100% - 40vmin);
+  margin-top: 1vmin;
+  height: calc(100% - 12em);
 }
