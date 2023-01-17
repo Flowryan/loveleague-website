@@ -165,3 +165,76 @@ content .video {
   margin-top: 1vmin;
   height: calc(100% - 12em);
 }
+
+/* galery */
+galery {
+  height: 100%;
+  margin: auto;
+  display: block;
+}
+galery ul {
+  padding: 0;
+  margin: 0;
+
+  height: 100%;
+
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px 1px black;
+
+  overflow: hidden;
+  list-style: none;
+}
+galery ul li {
+  background-position: center;
+  background-repeat: no-repeat;
+
+  box-shadow: 2px 0 10px 2px black;
+
+  transition: all 0.7s;
+  -moz-transition: all 0.7s;
+  -webkit-transition: all 0.7s;
+}
+
+/* Smartphone/Portrait */
+@media (max-aspect-ratio: 7/8) {
+  galery {
+    max-height: 85vw;
+  }
+  galery ul li {
+    background-size: 100% auto;
+    width: 100%;
+  }
+
+  galery ul li {
+    height: 20%;
+  }
+  galery ul:hover li {
+    height: 10%;
+  }
+  galery ul li:hover {
+    height: 60%;
+  }
+}
+
+/* Desktop/Landscape */
+@media (min-aspect-ratio: 7/8) {
+  galery {
+    max-width: 153vh;
+    max-height: 41.5vw;
+  }
+  galery ul li {
+    background-size: auto 100%;
+    height: 100%;
+    float: left;
+  }
+
+  galery ul li {
+    width: 20%;
+  }
+  galery ul:hover li {
+    width: 5%;
+  }
+  galery ul li:hover {
+    width: 80%;
+  }
+}
