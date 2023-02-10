@@ -67,7 +67,6 @@ content {
   display: block;
   top: 25vmin;
   height: calc(98% - 27vmin - 1.2em);
-  background-color: #1c87c980;
   padding: 1vmin 2vmin;
 }
 
@@ -166,7 +165,13 @@ content .video {
   height: calc(100% - 12em);
 }
 
-/* galery */
+/* LoveLeague */
+#section_loveleague content {
+  background-color: #1c87c980;
+  border-radius: 4px;
+}
+
+/* Galery */
 galery {
   display: block;
 }
@@ -237,4 +242,14 @@ galery ul li {
   galery ul li:hover {
     width: 80%;
   }
+}
+
+/* Download */
+#section_download content a img {
+  position: relative;
+  top: 15%;
+  margin: auto;
+  display: block;
+  max-width: 100%;
+  max-height: calc(98% - 27vmin - 1.2em);
 }
